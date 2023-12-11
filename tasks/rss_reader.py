@@ -16,10 +16,12 @@ def parse_channel(channel_elem):
         "title": channel_elem.find("title").text,
         "link": channel_elem.find("link").text,
         "description": channel_elem.find("description").text,
-        "lastBuildDate": channel_elem.find("lastBuildDate").text if channel_elem.find("lastBuildDate") is not None else "",
+        "lastBuildDate":
+            channel_elem.find("lastBuildDate").text if channel_elem.find("lastBuildDate") is not None else "",
         "pubDate": channel_elem.find("pubDate").text if channel_elem.find("pubDate") is not None else "",
         "language": channel_elem.find("language").text if channel_elem.find("language") is not None else "",
-        "managingEditor": channel_elem.find("managingEditor").text if channel_elem.find("managingEditor") is not None else "",
+        "managingEditor":
+            channel_elem.find("managingEditor").text if channel_elem.find("managingEditor") is not None else "",
         "categories": [category.text for category in channel_elem.findall("category")],
     }
     return channel_data
@@ -37,7 +39,7 @@ def parse_item(item_elem):
     return item_data
 
 
-def rss_parser(xml: str, limit: Optional[int] = None, json_output: bool = False) -> List[str]:
+def rss_parser(xml: str, limit: Optional[int] = None, json: bool = False) -> List[str]:
     """
     RSS parser.
 
@@ -87,15 +89,15 @@ def rss_parser(xml: str, limit: Optional[int] = None, json_output: bool = False)
         result.append(item_data['description'])
         result.append("")
 
-    if json_output:
+    if json:
         # Format for JSON output
-        json_result = {
+        rss_json = {
             "title": channel_data["title"],
             "link": channel_data["link"],
             "description": channel_data["description"],
             "items": items_data,
         }
-        return [json.dumps(json_result, indent=2)]
+        return [json.dumps(rss_json, indent=2)]
 
     return result
 
@@ -132,3 +134,4 @@ def main(argv: Optional[Sequence] = None):
 
 if __name__ == "__main__":
     main()
+
