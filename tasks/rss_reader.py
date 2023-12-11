@@ -4,7 +4,7 @@ from argparse import ArgumentParser
 from typing import List, Optional, Sequence
 import requests
 import xml.etree.ElementTree as ET
-import json
+import json as json_module
 
 
 class UnhandledException(Exception):
@@ -46,7 +46,7 @@ def rss_parser(xml: str, limit: Optional[int] = None, json: bool = False) -> Lis
     Args:
         xml: XML document as a string.
         limit: Number of the news to return. if None, returns all news.
-        json_output: If True, format output as JSON.
+        json: If True, format output as JSON.
 
     Returns:
         List of strings.
@@ -97,7 +97,7 @@ def rss_parser(xml: str, limit: Optional[int] = None, json: bool = False) -> Lis
             "description": channel_data["description"],
             "items": items_data,
         }
-        return [json.dumps(rss_json, indent=2)]
+        return [json_module.dumps(rss_json, indent=2)]
 
     return result
 
